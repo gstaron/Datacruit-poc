@@ -1,52 +1,37 @@
 # Datacruit PoC
 
-An unofficial proof-of-concept web app that recreates the core recruiting
-workflow of [datacruit.com](https://www.datacruit.com)'s ATS product: job
-postings, AI-assisted resume parsing and candidate matching, a visual
-hiring pipeline, interview scheduling, manager evaluations, and hiring
-analytics. Not affiliated with Datacruit.
+An unofficial proof-of-concept recruiting/ATS product, built as a
+portfolio piece for a **Backend Python Developer** application at
+[Datacruit](https://www.datacruit.com) — a Czech HR-tech startup whose
+own ATS is used by companies across 10 European countries. Not
+affiliated with Datacruit.
 
-## Features
+Two parts, same domain (jobs, candidates, a hiring pipeline, interview
+scheduling, manager evaluations, and explainable AI-assisted resume
+matching that runs entirely in-process — no third-party AI API calls):
 
-- **Job postings** — open roles with must-have / nice-to-have requirements
-  (`/jobs`, "+ Post a new job").
-- **AI resume parsing & matching** — paste a resume on the apply form and
-  the app extracts a skill list and computes an explainable match score
-  against the job's requirements (`lib/matching.ts`).
-- **Pipeline / Kanban board** — move candidates through
-  Applied → Screening → Interview → Offer → Hired / Rejected per job
-  (`/jobs/[id]`).
-- **Candidate profiles** — resume, AI match breakdown (matched/missing
-  skills), interview history, and evaluations (`/candidates/[id]`).
-- **Interview scheduling** — schedule interviews with an interviewer,
-  type and notes directly from a candidate's profile.
-- **Manager portal** — evaluators leave a star rating, hire/no-hire/maybe
-  recommendation and comments per candidate.
-- **Recruiting dashboard** — open jobs, total candidates, offers extended,
-  average time-to-hire, average AI match score, a pipeline funnel chart,
-  a candidate-source breakdown, and upcoming interviews (`/`).
+- **[`backend/`](backend/README.md)** — the primary deliverable: Django
+  REST Framework + PostgreSQL, with a FastAPI + SQLAlchemy AI matching
+  microservice and Redis (Celery broker, caching), matching the exact
+  stack in Datacruit's job posting. Built test-first, **100% test
+  coverage enforced in CI**.
+- **[`frontend/`](frontend/README.md)** — a Next.js/TypeScript UI over
+  the same domain, the original standalone demo.
 
-## Tech stack
+See [`SECURITY.md`](SECURITY.md) for the CI security/code-review setup
+and how to extend it with Claude-powered review agents.
 
-Next.js 14 (App Router) + TypeScript + Tailwind CSS + Recharts. Data is
-persisted to a local JSON file (`data/db.json`, gitignored) via Next.js
-Server Actions — no external database required. The file is generated
-from realistic seed data on first run.
-
-## Getting started
+## Quick start
 
 ```bash
-npm install
-npm run dev
+# Backend API (Django + DRF + Postgres + Redis + FastAPI AI service)
+docker compose up --build
+# → http://localhost:8000/api/  and  http://localhost:8001/docs
+
+# Frontend demo
+cd frontend && npm install && npm run dev
+# → http://localhost:3000
 ```
 
-Then open http://localhost:3000.
-
-## Notes on the "AI" features
-
-The resume parsing and match scoring are a deliberately simple, fully
-explainable keyword-overlap algorithm (see `lib/matching.ts`) rather than
-a call to a real LLM — it's meant to demonstrate the *product experience*
-(automatic parsing, a match score with a matched/missing breakdown) that
-Datacruit's AI-powered CV analysis and candidate matching offers, not to
-replicate its actual model.
+Full setup, test/coverage commands, and API reference:
+[`backend/README.md`](backend/README.md).

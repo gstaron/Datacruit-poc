@@ -1,0 +1,22 @@
+[tool.coverage.run]
+branch = true
+source = ["."]
+omit = [
+    "manage.py",
+    "config/wsgi.py",
+    "config/asgi.py",
+    "*/migrations/*",
+    "*/tests/*",
+    ".venv/*",
+    "*/venv/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 100
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+]

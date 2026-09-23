@@ -1,0 +1,2 @@
+[bandit]
+exclude = /.venv,/htmlcov,*/tests/*,*/migrations/*
