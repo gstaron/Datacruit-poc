@@ -65,7 +65,7 @@ jobs:
         run: pytest
 
       - name: Static security analysis (bandit)
-        run: bandit -c .bandit -r .
+        run: bandit -r . -x './.venv,./htmlcov,*/tests/*,*/migrations/*'
 
       - name: Dependency vulnerability scan (pip-audit)
         run: pip-audit -r requirements.txt

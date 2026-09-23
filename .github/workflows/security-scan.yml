@@ -31,7 +31,7 @@ jobs:
         run: pip install -r requirements-dev.txt
 
       - name: Static security analysis (bandit)
-        run: bandit -c .bandit -r . -f json -o bandit-report.json
+        run: bandit -r . -x './.venv,./htmlcov,*/tests/*,*/migrations/*' -f json -o bandit-report.json
 
       - name: Dependency vulnerability scan (pip-audit)
         run: pip-audit -r requirements.txt -f json -o pip-audit-report.json
