@@ -1,0 +1,13 @@
+from rest_framework import serializers
+
+from .models import Job
+
+
+class JobSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Job
+        fields = [
+            "id", "title", "department", "location", "employment_type", "status",
+            "description", "must_have", "nice_to_have", "created_at",
+        ]
+        read_only_fields = ["id", "created_at"]
