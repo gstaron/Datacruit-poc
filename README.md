@@ -19,7 +19,10 @@ matching that runs entirely in-process — no third-party AI API calls):
   the same domain, the original standalone demo.
 
 See [`SECURITY.md`](SECURITY.md) for the CI security/code-review setup
-and how to extend it with Claude-powered review agents.
+and how to extend it with Claude-powered review agents, and
+[`CLAUDE.md`](CLAUDE.md) for this repo's review discipline (what needs
+a human read, what needs adversarial/security review before merge,
+and what this project deliberately doesn't build at this scale).
 
 ## Quick start
 
