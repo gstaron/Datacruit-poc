@@ -14,5 +14,10 @@ RUN pip install --no-cache-dir -r requirements-dev.txt
 
 COPY . .
 
+# CompressedManifestStaticFilesStorage requires staticfiles.json to
+# exist before the app serves a single request with DEBUG=False, or
+# any {% static %} render (admin, DRF browsable API) raises ValueError.
+RUN python manage.py collectstatic --noinput
+
 EXPOSE 8000
 CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000"]
